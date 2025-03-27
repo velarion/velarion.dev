@@ -1,15 +1,17 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
+import { fileURLToPath, URL } from 'url';
+import tailwind from '@astrojs/tailwind';
 
 import vue from '@astrojs/vue';
 
-import tailwindcss from '@tailwindcss/vite';
-
-// https://astro.build/config
 export default defineConfig({
-  integrations: [vue()],
+  integrations: [vue({ jsx: true, devtools: true }), tailwind({ applyBaseStyles: false})],
 
   vite: {
-    plugins: [tailwindcss()]
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    },
   }
 });
